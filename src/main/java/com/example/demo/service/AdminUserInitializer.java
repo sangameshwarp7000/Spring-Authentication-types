@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Role;
 import com.example.demo.entity.Users;
 import com.example.demo.repository.UserDetailsRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -21,11 +22,23 @@ public class AdminUserInitializer {
                 Users admin = new Users();
                 admin.setUserName("admin");
                 admin.setPassword(passwordEncoder.encode("admin1234"));
-                admin.setRole("ROLE_ADMIN");
+                admin.setRole(Role.ADMIN);
 
                 userRepository.save(admin);
 
-                System.out.println("Default admin user created!");
+                System.out.println("Default admin record created!");
+            }
+
+            if (userRepository.findByName("user").isEmpty()) { //findByUserName
+
+                Users user = new Users();
+                user.setUserName("user");
+                user.setPassword(passwordEncoder.encode("user1234"));
+                user.setRole(Role.USER);
+
+                userRepository.save(user);
+
+                System.out.println("Default user record created!");
             }
         };
     }
