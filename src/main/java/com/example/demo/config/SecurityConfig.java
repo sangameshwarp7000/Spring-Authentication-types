@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +24,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -38,12 +40,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth->
                         auth
                             .requestMatchers("/h2-console/**", "/login").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/signup").hasRole(Role.ADMIN.name())
-                            .requestMatchers(HttpMethod.GET, "/students/**").hasAuthority(Permissions.READ.name())
-                            .requestMatchers(HttpMethod.POST, "/students/**").hasAuthority(Permissions.WRITE.name())
-                            .requestMatchers(HttpMethod.PUT, "/students/**").hasAuthority(Permissions.UPDATE.name())
-                            .requestMatchers(HttpMethod.DELETE, "/students/**").hasAuthority(Permissions.DELETE.name())
-                            .requestMatchers("/hello").hasRole(Role.ADMIN.name())
+//                            .requestMatchers(HttpMethod.POST, "/signup").hasRole(Role.ADMIN.name())
+//                            .requestMatchers(HttpMethod.GET, "/students/**").hasAuthority(Permissions.READ.name())
+//                            .requestMatchers(HttpMethod.POST, "/students/**")..hasAnyRole("ADMIN", "USER")
+//                            .requestMatchers(HttpMethod.PUT, "/students/**").hasAuthority(Permissions.UPDATE.name())
+//                            .requestMatchers(HttpMethod.DELETE, "/students/**").hasAuthority(Permissions.DELETE.name())
+//                            .requestMatchers("/hello").hasRole(Role.ADMIN.name())
                             .anyRequest().authenticated());
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

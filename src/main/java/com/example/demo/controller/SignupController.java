@@ -4,6 +4,7 @@ import com.example.demo.entity.SignupRequest;
 import com.example.demo.entity.SignupResponse;
 import com.example.demo.service.SignupService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -19,6 +20,7 @@ public class SignupController {
     }
 
     @PostMapping("/signup")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public SignupResponse signup(@RequestBody SignupRequest request) {
         return signupService.signup(request);

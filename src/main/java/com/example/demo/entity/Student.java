@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,6 +17,9 @@ public class Student {
     private Long id;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private CreatedBy createdBy;
 
     public Student() {
     }
@@ -37,5 +42,13 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public CreatedBy getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(CreatedBy createdBy) {
+        this.createdBy = createdBy;
     }
 }
